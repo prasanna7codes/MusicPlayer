@@ -1,4 +1,4 @@
-import TrackPlayer from "react-native-track-player";
+import TrackPlayer, { RepeatMode } from "react-native-track-player";
 
 import { playListData } from "./src/constants";
 
@@ -20,6 +20,12 @@ export async function setupPlayer() {
 
 }
 
+
+export async function addTrack(){
+   await TrackPlayer.add(playListData)
+   await TrackPlayer.setRepeatMode(RepeatMode.Queue)
+}
+ 
 
 
 
