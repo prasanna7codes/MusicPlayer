@@ -1,6 +1,6 @@
+import React, {useState, useEffect} from "react"
 
-
-import React, {useState,useEffect}from 'react';
+import type {JSX, PropsWithChildren} from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -12,49 +12,47 @@ import {
   View,
 } from 'react-native';
 
+import {setupPlayer, addTrack} from '../MusicPlayerServices';
+import MusicPlayer from './screens/MusicPlayer';
 
-import { setupPlayer,addTrack} from '../MuiscPlayerServices'
-import { add } from 'react-native-track-player/lib/src/trackPlayer';
 
-
-function App(): React.JSX.Element {
- 
-  const [isPlayerReady,setIsPlayerReady]=useState(false)
+function App(): JSX.Element {
+  const [isPlayerReady, setIsPaylerReady] = useState(false)
 
   async function setup(){
     let isSetup = await setupPlayer()
 
-    if (isSetup){
+    if (isSetup) {
       await addTrack()
-
     }
 
-    setIsPlayerReady(isSetup)
+    setIsPaylerReady(isSetup)
   }
 
-
   useEffect(() => {
-      setup()
+    setup()
   }, [])
-
-
-  if (!isPlayerReady){
-    <SafeAreaView>
-      <ActivityIndicator/>
-    </SafeAreaView>
+  
+  if (!isPlayerReady) {
+    return (
+      <SafeAreaView>
+        <ActivityIndicator />
+      </SafeAreaView>
+    )
   }
 
   return (
-    <View>
-      <Text> hello </Text>
+    <View style={styles.container}>
+      <StatusBar barStyle={'light-content'} />
+      <MusicPlayer />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
- container:{
-  flex:1
- }
+  container:{
+    flex: 1
+  }
 });
 
 export default App;
